@@ -21,12 +21,15 @@ form.addEventListener("submit", (e) => {
   const room = roomInput.value;
   if (message === "") return;
   displayMessage(message);
-  socket.emit("send-message", message);
+  socket.emit("send-message", message, room);
   messageInput.value = "";
 });
 
 joinRoomButton.addEventListener("click", () => {
   const room = roomInput.value;
+  socket.emit("join-room", room, message => {
+    displayMessage(message);
+  });
 });
 
 function displayMessage(message) {
